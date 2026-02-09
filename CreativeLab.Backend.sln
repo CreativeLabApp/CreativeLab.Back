@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D2053AD1-0C56-4ED4-9A22-8AED116B3164}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{5C85AD77-D69B-4A56-B8E7-5BDBC24EEA61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreativeLab.Domain", "CreativeLab.Domain\CreativeLab.Domain.csproj", "{DA63E90F-633A-4416-BD08-FAF954485283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreativeLab.Application", "CreativeLab.Application\CreativeLab.Application.csproj", "{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreativeLab.Persistance", "CreativeLab.Persistance\CreativeLab.Persistance.csproj", "{157F654E-0875-4310-ABCB-3D813775EFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreativeLab.WebApi", "CreativeLab.WebApi\CreativeLab.WebApi.csproj", "{57691C07-C801-4678-9229-7E854F7A8403}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA63E90F-633A-4416-BD08-FAF954485283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA63E90F-633A-4416-BD08-FAF954485283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA63E90F-633A-4416-BD08-FAF954485283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA63E90F-633A-4416-BD08-FAF954485283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{157F654E-0875-4310-ABCB-3D813775EFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157F654E-0875-4310-ABCB-3D813775EFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157F654E-0875-4310-ABCB-3D813775EFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157F654E-0875-4310-ABCB-3D813775EFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57691C07-C801-4678-9229-7E854F7A8403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57691C07-C801-4678-9229-7E854F7A8403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57691C07-C801-4678-9229-7E854F7A8403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57691C07-C801-4678-9229-7E854F7A8403}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA63E90F-633A-4416-BD08-FAF954485283} = {D2053AD1-0C56-4ED4-9A22-8AED116B3164}
+		{9C6BBCDF-25B7-4CE2-BA0B-4AD12EE2366E} = {D2053AD1-0C56-4ED4-9A22-8AED116B3164}
+		{157F654E-0875-4310-ABCB-3D813775EFD6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{57691C07-C801-4678-9229-7E854F7A8403} = {5C85AD77-D69B-4A56-B8E7-5BDBC24EEA61}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {633FEA5C-3639-451B-BB4A-23F627C9DC01}
+	EndGlobalSection
+EndGlobal
