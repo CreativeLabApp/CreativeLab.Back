@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Настройка Swagger
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
     });
 
-    // Включение XML комментариев
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ XML пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     if (File.Exists(xmlPath))
@@ -30,17 +30,18 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
-// Регистрация сервисов
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     config.AddProfile(new AssemblyMappingProfile(typeof(ICreativeLabDbContext).Assembly));
+    config.AddProfile(new CreativeLab.WebApi.Mappings.WebApiMappingProfile());
 });
 
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 
-// Настройка CORS
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
@@ -58,28 +59,28 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Инициализация базы данных
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<CreativeLabDbContext>();
     DbInitializer.Initialize(context);
 }
 
-// Настройка pipeline
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hooome API v1");
-        c.RoutePrefix = "swagger";
+        c.RoutePrefix = "";
         c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
     });
 }
 
 app.UseHttpsRedirection();
 app.UseCors("FrontendPolicy");
-app.UseAuthorization(); // Добавьте если используете авторизацию
+app.UseAuthorization(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 app.MapControllers();
 
 app.Run();
