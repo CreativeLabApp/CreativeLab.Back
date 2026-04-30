@@ -10,14 +10,10 @@ public class UserDetailsVm : IMapWith<User>
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; set; }
-    public ICollection<UserFavoriteMasterclass> FavoriteMasterclasses { get; set; } = [];
-    public ICollection<UserFavoriteProduct> FavoriteProducts { get; set; } = [];
-    public ICollection<Masterclass> CreatedMasterclasses { get; set; } = [];
-    public ICollection<Product> CreatedProducts { get; set; } = [];
+    public DateTime CreatedAt { get; set; }
+    public int MasterclassesCount { get; set; }
 
     public void Mapping(Profile profile)
-        => profile.CreateMap<User, UserDetailsVm>();
+        => profile.CreateMap<User, UserDetailsVm>()
+            .ForMember(d => d.MasterclassesCount, opt => opt.MapFrom(s => s.CreatedMasterclasses.Count));
 }

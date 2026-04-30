@@ -28,5 +28,6 @@ public class Masterclass
     public User Author { get; set; } = null!;
     public Category Category { get; set; } = null!;
     public ICollection<Tag> Tags { get; set; } = [];
+    public ICollection<MasterclassMaterial> Materials { get; set; } = [];
     public ICollection<UserFavoriteMasterclass> FavoritedBy { get; set; } = []; // Обратная связь
 }

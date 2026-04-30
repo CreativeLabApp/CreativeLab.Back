@@ -10,8 +10,11 @@ public class CreativeLabDbContext(DbContextOptions<CreativeLabDbContext> options
     public DbSet<User> Users { get; set; }
     public DbSet<UserFavoriteMasterclass> UserFavoriteMasterclasses { get; set; }
     public DbSet<UserFavoriteProduct> UserFavoriteProducts { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Masterclass> Masterclasses { get; set; }
+    public DbSet<MasterclassMaterial> MasterclassMaterials { get; set; }
+    public DbSet<MasterclassRating> MasterclassRatings { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductMaterial> ProductMaterials { get; set; }
     public DbSet<Tag> Tags { get; set; }

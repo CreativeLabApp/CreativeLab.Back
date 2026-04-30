@@ -3,6 +3,7 @@ using CreativeLab.Application.Features.Categories.Commands.CreateCategory;
 using CreativeLab.Application.Features.Categories.Commands.DeleteCategory;
 using CreativeLab.Application.Features.Categories.Commands.UpdateCategory;
 using CreativeLab.Application.Features.Categories.Queries.GetCategoryDetails;
+using CreativeLab.Application.Features.Categories.Queries.GetCategoryList;
 using CreativeLab.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,13 @@ namespace CreativeLab.WebApi.Controllers;
 
 public class CategoryController(IMapper mapper) : BaseController
 {
+    [HttpGet]
+    public async Task<ActionResult<List<CategoryLookupDto>>> GetAll()
+    {
+        var vm = await Mediator.Send(new GetCategoryListQuery());
+        return Ok(vm);
+    }
+
     [HttpGet]
     public async Task<ActionResult<CategoryDetailsVm>> Get([FromQuery] Guid id)
     {

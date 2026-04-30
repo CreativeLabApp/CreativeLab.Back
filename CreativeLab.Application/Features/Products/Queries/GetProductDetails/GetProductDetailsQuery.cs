@@ -1,6 +1,7 @@
 using AutoMapper;
 using CreativeLab.Application.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreativeLab.Application.Features.Products.Queries.GetProductDetails;
 
@@ -15,7 +16,10 @@ public class GetProductDetailsQueryHandler(ICreativeLabDbContext dbContext, IMap
     public async Task<ProductDetailsVm> Handle(GetProductDetailsQuery request, CancellationToken cancellationToken)
     {
         var product = await dbContext.Products
-            .FindAsync([request.Id], cancellationToken)
+            .Include(p => p.Seller)
+            .Include(p => p.Category)
+            .Include(p => p.Materials)
+            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new InvalidOperationException("Product with this Id does not exist");
 
         return mapper.Map<ProductDetailsVm>(product);

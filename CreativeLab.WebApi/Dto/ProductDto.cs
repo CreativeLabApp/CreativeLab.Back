@@ -11,7 +11,8 @@ public class CreateProductDto
     public string? SKU { get; set; }
     public int StockQuantity { get; set; } = 1;
     public bool IsAvailable { get; set; } = true;
-    public Guid CategoryId { get; set; }
+    public Guid? CategoryId { get; set; }
+    public string? CategoryName { get; set; }
     public string[] ImageUrls { get; set; } = [];
     public string? ThumbnailUrl { get; set; }
     public string? Dimensions { get; set; }

@@ -17,6 +17,8 @@ using CreativeLab.Application.Features.UserFavorites.Commands.AddFavoriteMasterc
 using CreativeLab.Application.Features.UserFavorites.Commands.AddFavoriteProduct;
 using CreativeLab.Application.Features.UserFavorites.Commands.RemoveFavoriteMasterclass;
 using CreativeLab.Application.Features.UserFavorites.Commands.RemoveFavoriteProduct;
+using CreativeLab.Application.Features.Users.Commands.CreateUser;
+using CreativeLab.Application.Features.Users.Commands.UpdateUser;
 using CreativeLab.WebApi.Dto;
 
 namespace CreativeLab.WebApi.Mappings;
@@ -50,5 +52,9 @@ public class WebApiMappingProfile : Profile
         CreateMap<RemoveFavoriteMasterclassDto, RemoveFavoriteMasterclassCommand>();
         CreateMap<AddFavoriteProductDto, AddFavoriteProductCommand>();
         CreateMap<RemoveFavoriteProductDto, RemoveFavoriteProductCommand>();
+
+        CreateMap<RegisterDto, CreateUserCommand>();
+        CreateMap<UpdateUserDto, UpdateUserCommand>()
+            .ForMember(d => d.Password, opt => opt.MapFrom(s => s.Password ?? string.Empty));
     }
 }

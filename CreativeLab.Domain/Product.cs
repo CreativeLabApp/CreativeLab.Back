@@ -30,6 +30,10 @@ public class Product
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
+    // Рейтинг
+    public decimal Rating { get; set; }
+    public int RatingsCount { get; set; }
+
     // Навигационные свойства
     public User Seller { get; set; } = null!;
     public Category Category { get; set; } = null!;

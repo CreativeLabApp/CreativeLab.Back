@@ -94,5 +94,27 @@ public class MasterclassConfiguration : IEntityTypeConfiguration<Masterclass>
                     j.ToTable("MasterclassTags");
                     j.HasIndex("TagId");
                 });
+
+        // Связь многие-ко-многим с Materials
+        builder.HasMany(m => m.Materials)
+            .WithMany(mat => mat.Masterclasses)
+            .UsingEntity<Dictionary<string, object>>(
+                "MasterclassMaterialLink",
+                j => j
+                    .HasOne<MasterclassMaterial>()
+                    .WithMany()
+                    .HasForeignKey("MaterialId")
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j
+                    .HasOne<Masterclass>()
+                    .WithMany()
+                    .HasForeignKey("MasterclassId")
+                    .OnDelete(DeleteBehavior.Cascade),
+                j =>
+                {
+                    j.HasKey("MasterclassId", "MaterialId");
+                    j.ToTable("MasterclassMaterialLinks");
+                    j.HasIndex("MaterialId");
+                });
     }
 }

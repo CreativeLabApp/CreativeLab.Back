@@ -16,8 +16,9 @@ public class GetUserDetailsQueryHandler(ICreativeLabDbContext dbContext, IMapper
     public async Task<UserDetailsVm> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         var user = await dbContext.Users
-            .FindAsync([request.Id], cancellationToken)
-            ?? throw new InvalidOperationException("User with this Id does not exists");
+            .Include(u => u.CreatedMasterclasses)
+            .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken)
+            ?? throw new InvalidOperationException("User with this Id does not exist");
 
         return mapper.Map<UserDetailsVm>(user);
     }
