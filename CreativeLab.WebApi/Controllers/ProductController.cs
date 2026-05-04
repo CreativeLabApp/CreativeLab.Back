@@ -5,6 +5,7 @@ using CreativeLab.Application.Features.Products.Commands.RateProduct;
 using CreativeLab.Application.Features.Products.Commands.UpdateProduct;
 using CreativeLab.Application.Features.Products.Queries.GetProductDetails;
 using CreativeLab.Application.Features.Products.Queries.GetProductList;
+using CreativeLab.Application.Features.Products.Queries.GetUserRating;
 using CreativeLab.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,7 +60,14 @@ public class ProductController(IMapper mapper) : BaseController
     [HttpPatch]
     public async Task<ActionResult<decimal>> Rate([FromQuery] Guid id, [FromQuery] int score)
     {
-        var newRating = await Mediator.Send(new RateProductCommand { ProductId = id, Score = score });
+        var newRating = await Mediator.Send(new RateProductCommand { ProductId = id, UserId = UserId, Score = score });
         return Ok(new { rating = newRating });
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<UserProductRatingDto?>> GetUserRating([FromQuery] Guid productId)
+    {
+        var result = await Mediator.Send(new GetUserRatingQuery { ProductId = productId, UserId = UserId });
+        return Ok(result);
     }
 }

@@ -15,6 +15,7 @@ public class CreativeLabDbContext(DbContextOptions<CreativeLabDbContext> options
     public DbSet<Masterclass> Masterclasses { get; set; }
     public DbSet<MasterclassMaterial> MasterclassMaterials { get; set; }
     public DbSet<MasterclassRating> MasterclassRatings { get; set; }
+    public DbSet<ProductRating> ProductRatings { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductMaterial> ProductMaterials { get; set; }
     public DbSet<Tag> Tags { get; set; }

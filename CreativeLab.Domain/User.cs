@@ -19,6 +19,8 @@ public class User
     public ICollection<Masterclass> CreatedMasterclasses { get; set; } = [];
     public ICollection<Product> CreatedProducts { get; set; } = [];
 
+    public ICollection<ProductRating> Ratings { get; set; } = [];
+
     // Чаты
     public ICollection<ChatParticipant> ChatParticipants { get; set; } = [];
     public ICollection<Message> SentMessages { get; set; } = [];

@@ -13,6 +13,7 @@ public interface ICreativeLabDbContext
     DbSet<Masterclass> Masterclasses { get; set; }
     DbSet<MasterclassMaterial> MasterclassMaterials { get; set; }
     DbSet<MasterclassRating> MasterclassRatings { get; set; }
+    DbSet<ProductRating> ProductRatings { get; set; }
     DbSet<Product> Products { get; set; }
     DbSet<ProductMaterial> ProductMaterials { get; set; }
     DbSet<Tag> Tags { get; set; }
