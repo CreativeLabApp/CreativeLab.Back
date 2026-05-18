@@ -7,7 +7,7 @@ public class UploadController : BaseController
     private static readonly string[] AllowedImageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
     private static readonly string[] AllowedVideoExtensions = [".mp4", ".webm", ".mov", ".avi"];
     private const long MaxImageFileSize = 5 * 1024 * 1024; // 5MB
-    private const long MaxVideoFileSize = 100 * 1024 * 1024; // 100MB
+    private const long MaxVideoFileSize = 1000 * 1024 * 1024; // 100MB
 
     [HttpPost]
     public async Task<ActionResult<UploadImagesResult>> Images(
