@@ -1,8 +1,10 @@
 using AutoMapper;
 using CreativeLab.Application.Features.Masterclasses.Commands.CreateMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Commands.DeleteMasterclass;
+using CreativeLab.Application.Features.Masterclasses.Commands.DeleteRating;
 using CreativeLab.Application.Features.Masterclasses.Commands.RateMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Commands.UpdateMasterclass;
+using CreativeLab.Application.Features.Masterclasses.Queries.GetAllRatings;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassDetails;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassList;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassRatings;
@@ -87,6 +89,13 @@ public class MasterclassController(IMapper mapper, ICreativeLabDbContext dbConte
         return NoContent();
     }
 
+    [HttpDelete]
+    public async Task<ActionResult> DeleteRating([FromQuery] Guid id)
+    {
+        await Mediator.Send(new DeleteRatingCommand { Id = id });
+        return NoContent();
+    }
+
     [HttpPatch]
     public async Task<ActionResult> Rate([FromQuery] Guid id, [FromQuery] Guid userId, [FromQuery] int score, [FromQuery] string? comment = null)
     {
@@ -105,6 +114,13 @@ public class MasterclassController(IMapper mapper, ICreativeLabDbContext dbConte
     public async Task<ActionResult<List<MasterclassRatingDto>>> GetRatings([FromQuery] Guid id)
     {
         var ratings = await Mediator.Send(new GetMasterclassRatingsQuery { MasterclassId = id });
+        return Ok(ratings);
+    }
+
+    [HttpGet("getallratings")]
+    public async Task<ActionResult<List<AllRatingsDto>>> GetAllRatings()
+    {
+        var ratings = await Mediator.Send(new GetAllRatingsQuery());
         return Ok(ratings);
     }
 }

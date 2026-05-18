@@ -25,8 +25,8 @@ public class GetMasterclassRatingsQueryHandler(ICreativeLabDbContext dbContext)
     public async Task<List<MasterclassRatingDto>> Handle(GetMasterclassRatingsQuery request, CancellationToken cancellationToken)
     {
         return await dbContext.MasterclassRatings
-            .Where(r => r.MasterclassId == request.MasterclassId)
             .Include(r => r.User)
+            .Where(r => r.MasterclassId == request.MasterclassId)
             .OrderByDescending(r => r.UpdatedAt ?? r.CreatedAt)
             .Select(r => new MasterclassRatingDto
             {
