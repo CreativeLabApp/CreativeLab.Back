@@ -7,12 +7,14 @@ using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassDetai
 using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassList;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassRatings;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetUserRating;
+using CreativeLab.Application.Interfaces;
 using CreativeLab.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreativeLab.WebApi.Controllers;
 
-public class MasterclassController(IMapper mapper) : BaseController
+public class MasterclassController(IMapper mapper, ICreativeLabDbContext dbContext) : BaseController
 {
     [HttpGet]
     public async Task<ActionResult<MasterclassListVm>> GetAll([FromQuery] bool onlyPublished = true)
@@ -33,6 +35,33 @@ public class MasterclassController(IMapper mapper) : BaseController
     {
         var vm = await Mediator.Send(new GetMasterclassDetailsQuery { Id = id });
         return Ok(vm);
+    }
+
+    [HttpGet("materials")]
+    public async Task<ActionResult<List<string>>> GetMaterials()
+    {
+        var materials = await dbContext.MasterclassMaterials
+            .Select(m => m.Name)
+            .Distinct()
+            .OrderBy(m => m)
+            .ToListAsync();
+        return Ok(materials);
+    }
+
+    [HttpGet("agecategories")]
+    public async Task<ActionResult<List<AgeCategoryDto>>> GetAgeCategories()
+    {
+        var ageCategories = await dbContext.AgeCategories
+            .OrderBy(a => a.MinAge)
+            .ToListAsync();
+        return Ok(ageCategories.Select(a => new AgeCategoryDto
+        {
+            Id = a.Id,
+            Name = a.Name,
+            MinAge = a.MinAge,
+            MaxAge = a.MaxAge,
+            Description = a.Description
+        }));
     }
 
     [HttpPost]

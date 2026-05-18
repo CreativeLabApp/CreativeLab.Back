@@ -22,6 +22,8 @@ public class CreativeLabDbContext(DbContextOptions<CreativeLabDbContext> options
     public DbSet<Chat> Chats { get; set; }
     public DbSet<ChatParticipant> ChatParticipants { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<UserPhoto> UserPhotos { get; set; }
+    public DbSet<AgeCategory> AgeCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

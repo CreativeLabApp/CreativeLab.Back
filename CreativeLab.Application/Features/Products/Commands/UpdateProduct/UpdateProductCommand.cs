@@ -19,4 +19,5 @@ public class UpdateProductCommand : IRequest<Product>
     public string? ThumbnailUrl { get; set; }
     public string? Dimensions { get; set; }
     public decimal? Weight { get; set; }
+    public List<string> Materials { get; set; } = [];
 }

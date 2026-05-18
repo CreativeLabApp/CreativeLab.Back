@@ -12,9 +12,9 @@ namespace CreativeLab.WebApi.Controllers;
 public class UserController(IMapper mapper) : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<List<UserLookupDto>>> GetAll()
+    public async Task<ActionResult<List<UserListItemVm>>> GetAll([FromQuery] string? search)
     {
-        var users = await Mediator.Send(new GetUserListQuery());
+        var users = await Mediator.Send(new GetUserListQuery { Search = search, ExcludeUserId = UserId });
         return Ok(users);
     }
 

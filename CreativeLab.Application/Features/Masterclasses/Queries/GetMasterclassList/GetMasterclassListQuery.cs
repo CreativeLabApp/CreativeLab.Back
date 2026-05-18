@@ -28,6 +28,7 @@ public class GetMasterclassListQueryHandler(ICreativeLabDbContext dbContext, IMa
         var masterclasses = await query
             .Include(m => m.Author)
             .Include(m => m.Category)
+            .Include(m => m.AgeCategory)
             .Include(m => m.Materials)
             .OrderByDescending(m => m.CreatedAt)
             .ProjectTo<MasterclassLookupDto>(mapper.ConfigurationProvider)

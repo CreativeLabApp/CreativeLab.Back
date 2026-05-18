@@ -24,4 +24,8 @@ public class User
     // Чаты
     public ICollection<ChatParticipant> ChatParticipants { get; set; } = [];
     public ICollection<Message> SentMessages { get; set; } = [];
+    public ICollection<Message> ReceivedMessages { get; set; } = [];
+
+    // Фотографии пользователя
+    public ICollection<UserPhoto> UserPhotos { get; set; } = [];
 }

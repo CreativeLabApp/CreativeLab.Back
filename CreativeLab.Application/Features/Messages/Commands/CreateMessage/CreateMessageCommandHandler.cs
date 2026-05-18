@@ -14,9 +14,10 @@ public class CreateMessageCommandHandler(ICreativeLabDbContext dbContext)
             Id = Guid.NewGuid(),
             ChatId = request.ChatId,
             SenderId = request.SenderId,
+            ReceiverId = request.ReceiverId,
             Content = request.Content,
             ReplyToMessageId = request.ReplyToMessageId,
-            SentAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow
         };
 
         await dbContext.Messages.AddAsync(message, cancellationToken);
@@ -24,7 +25,7 @@ public class CreateMessageCommandHandler(ICreativeLabDbContext dbContext)
         var chat = await dbContext.Chats.FindAsync([request.ChatId], cancellationToken);
         if (chat is not null)
         {
-            chat.LastMessageAt = message.SentAt;
+            chat.LastMessageAt = message.CreatedAt;
             chat.LastMessageId = message.Id;
         }
 

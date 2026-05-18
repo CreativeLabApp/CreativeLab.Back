@@ -4,6 +4,8 @@ using CreativeLab.Application.Features.ChatParticipants.Commands.RemoveChatParti
 using CreativeLab.Application.Features.Chats.Commands.CreateChat;
 using CreativeLab.Application.Features.Chats.Commands.DeleteChat;
 using CreativeLab.Application.Features.Chats.Queries.GetChatDetails;
+using CreativeLab.Application.Features.Chats.Queries.GetOrCreateAdminChat;
+using CreativeLab.Application.Features.Chats.Queries.GetUserChats;
 using CreativeLab.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +17,20 @@ public class ChatController(IMapper mapper) : BaseController
     public async Task<ActionResult<ChatDetailsVm>> Get([FromQuery] Guid id)
     {
         var vm = await Mediator.Send(new GetChatDetailsQuery { Id = id });
+        return Ok(vm);
+    }
+
+    [HttpGet("user")]
+    public async Task<ActionResult<List<ChatListItemVm>>> GetUserChats([FromQuery] Guid userId)
+    {
+        var vm = await Mediator.Send(new GetUserChatsQuery { UserId = userId });
+        return Ok(vm);
+    }
+
+    [HttpGet("admin")]
+    public async Task<ActionResult<ChatListItemVm>> GetOrCreateAdminChat([FromQuery] Guid userId)
+    {
+        var vm = await Mediator.Send(new GetOrCreateAdminChatQuery { UserId = userId });
         return Ok(vm);
     }
 

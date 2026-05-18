@@ -27,6 +27,19 @@ public class DbInitializer
             if (!context.Categories.Any(c => c.Id == cat.Id))
                 context.Categories.Add(cat);
 
+        // --- Age Categories ---
+        var ageCategories = new List<AgeCategory>
+        {
+            new() { Id = Guid.Parse("55555555-0000-0000-0000-000000000001"), Name = "Дошкольники", MinAge = 0, MaxAge = 6, Description = "Для самых маленьких" },
+            new() { Id = Guid.Parse("55555555-0000-0000-0000-000000000002"), Name = "Дети", MinAge = 7, MaxAge = 12, Description = "Школьники младших классов" },
+            new() { Id = Guid.Parse("55555555-0000-0000-0000-000000000003"), Name = "Подростки", MinAge = 13, MaxAge = 17, Description = "Для старшеклассников" },
+            new() { Id = Guid.Parse("55555555-0000-0000-0000-000000000004"), Name = "Взрослые", MinAge = 18, MaxAge = 59, Description = "Для взрослых" },
+            new() { Id = Guid.Parse("55555555-0000-0000-0000-000000000005"), Name = "Пожилые", MinAge = 60, MaxAge = 100, Description = "Для старшего возраста" },
+        };
+        foreach (var ac in ageCategories)
+            if (!context.AgeCategories.Any(a => a.Id == ac.Id))
+                context.AgeCategories.Add(ac);
+
         // --- Users ---
         var users = new List<User>
         {
@@ -70,6 +83,9 @@ public class DbInitializer
         var mat = (Func<string, MasterclassMaterial>)(id =>
             context.MasterclassMaterials.Find(Guid.Parse(id))!);
 
+        var ageCat = (Func<string, AgeCategory>)(id =>
+            context.AgeCategories.Find(Guid.Parse(id))!);
+
         // --- Masterclasses ---
         var masterclasses = new List<Masterclass>
         {
@@ -79,6 +95,7 @@ public class DbInitializer
                 Description = "Подробный курс по созданию атмосферных пейзажей акварелью: от выбора бумаги и кистей до финальных деталей.",
                 ShortDescription = "Научитесь создавать атмосферные пейзажи акварелью",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000001"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000002"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000001"),
                 ImageUrls = ["https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop", "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop",
@@ -92,6 +109,7 @@ public class DbInitializer
                 Description = "Создание деревянных игрушек с нуля: инструменты, техники резьбы, шлифовка и покраска.",
                 ShortDescription = "Создание деревянных игрушек с нуля",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000002"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000003"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000002"),
                 ImageUrls = ["https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=800&auto=format&fit=crop", "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=800&auto=format&fit=crop",
@@ -105,6 +123,7 @@ public class DbInitializer
                 Description = "Профессиональная иллюстрация на iPad: слои, кисти, цветокоррекция и экспорт готовых работ.",
                 ShortDescription = "Профессиональная иллюстрация на iPad",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000003"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000003"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000003"),
                 ImageUrls = ["https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&auto=format&fit=crop", "https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&auto=format&fit=crop",
@@ -118,6 +137,7 @@ public class DbInitializer
                 Description = "Лепка на гончарном круге: центровка глины, вытягивание стенок, обжиг и глазурование.",
                 ShortDescription = "Лепка на гончарном круге с нуля",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000004"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000004"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000004"),
                 ImageUrls = ["https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&auto=format&fit=crop",
@@ -131,6 +151,7 @@ public class DbInitializer
                 Description = "От выбора пряжи и крючка до первого готового изделия. Основные петли, схемы и разбор типичных ошибок.",
                 ShortDescription = "Основы вязания крючком для начинающих",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000005"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000004"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000005"),
                 ImageUrls = ["https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop",
@@ -144,6 +165,7 @@ public class DbInitializer
                 Description = "Работа со светом, постановка кадра, настройки камеры и базовая ретушь в Lightroom.",
                 ShortDescription = "Свет, кадр и ретушь в портретной съёмке",
                 CategoryId = Guid.Parse("11111111-0000-0000-0000-000000000006"),
+                AgeCategoryId = Guid.Parse("55555555-0000-0000-0000-000000000004"),
                 AuthorId = Guid.Parse("22222222-0000-0000-0000-000000000001"),
                 ImageUrls = ["https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&auto=format&fit=crop"],
                 ThumbnailUrl = "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&auto=format&fit=crop",

@@ -16,18 +16,16 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
             .IsRequired()
             .HasColumnType("text");
 
-        builder.Property(m => m.SentAt)
+        builder.Property(m => m.CreatedAt)
             .IsRequired();
+
+        builder.Property(m => m.IsRead)
+            .IsRequired()
+            .HasDefaultValue(false);
 
         builder.Property(m => m.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
-
-        // Индексы
-        builder.HasIndex(m => m.ChatId);
-        builder.HasIndex(m => m.SenderId);
-        builder.HasIndex(m => m.SentAt);
-        builder.HasIndex(m => m.ReplyToMessageId);
 
         // Внешние ключи
         builder.HasOne(m => m.Chat)
@@ -38,6 +36,11 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
         builder.HasOne(m => m.Sender)
             .WithMany(u => u.SentMessages)
             .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(m => m.Receiver)
+            .WithMany(u => u.ReceivedMessages)
+            .HasForeignKey(m => m.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(m => m.ReplyTo)

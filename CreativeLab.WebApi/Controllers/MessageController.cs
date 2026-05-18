@@ -1,6 +1,7 @@
 using AutoMapper;
 using CreativeLab.Application.Features.Messages.Commands.CreateMessage;
 using CreativeLab.Application.Features.Messages.Commands.DeleteMessage;
+using CreativeLab.Application.Features.Messages.Queries.GetChatMessages;
 using CreativeLab.Application.Features.Messages.Queries.GetMessageDetails;
 using CreativeLab.WebApi.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,13 @@ public class MessageController(IMapper mapper) : BaseController
     public async Task<ActionResult<MessageDetailsVm>> Get([FromQuery] Guid id)
     {
         var vm = await Mediator.Send(new GetMessageDetailsQuery { Id = id });
+        return Ok(vm);
+    }
+
+    [HttpGet("chat")]
+    public async Task<ActionResult<List<MessageListItemVm>>> GetChatMessages([FromQuery] Guid chatId, [FromQuery] Guid userId)
+    {
+        var vm = await Mediator.Send(new GetChatMessagesQuery { ChatId = chatId, UserId = userId });
         return Ok(vm);
     }
 

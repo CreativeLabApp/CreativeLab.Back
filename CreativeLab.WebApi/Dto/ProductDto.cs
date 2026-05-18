@@ -17,6 +17,7 @@ public class CreateProductDto
     public string? ThumbnailUrl { get; set; }
     public string? Dimensions { get; set; }
     public decimal? Weight { get; set; }
+    public List<string> Materials { get; set; } = [];
 }
 
 public class UpdateProductDto
@@ -35,4 +36,5 @@ public class UpdateProductDto
     public string? ThumbnailUrl { get; set; }
     public string? Dimensions { get; set; }
     public decimal? Weight { get; set; }
+    public List<string> Materials { get; set; } = [];
 }

@@ -20,6 +20,8 @@ public interface ICreativeLabDbContext
     DbSet<Chat> Chats { get; set; }
     DbSet<ChatParticipant> ChatParticipants { get; set; }
     DbSet<Message> Messages { get; set; }
+    DbSet<UserPhoto> UserPhotos { get; set; }
+    DbSet<AgeCategory> AgeCategories { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

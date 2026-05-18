@@ -55,6 +55,9 @@ public class MasterclassConfiguration : IEntityTypeConfiguration<Masterclass>
         builder.Property(m => m.ThumbnailUrl)
             .HasMaxLength(500);
 
+        builder.Property(m => m.VideoUrl)
+            .HasMaxLength(500);
+
         // Индексы
         builder.HasIndex(m => m.AuthorId);
         builder.HasIndex(m => m.CategoryId);
@@ -71,6 +74,11 @@ public class MasterclassConfiguration : IEntityTypeConfiguration<Masterclass>
         builder.HasOne(m => m.Category)
             .WithMany(c => c.Masterclasses)
             .HasForeignKey(m => m.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(m => m.AgeCategory)
+            .WithMany(a => a.Masterclasses)
+            .HasForeignKey(m => m.AgeCategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Связь многие-ко-многим с Tags

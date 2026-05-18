@@ -62,6 +62,57 @@ public class CreateProductCommandHandler(ICreativeLabDbContext dbContext)
         await dbContext.Products.AddAsync(product, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
+        // Обрабатываем материалы - используем существующие или создаем новые
+        if (request.Materials != null && request.Materials.Count > 0)
+        {
+            var materialNames = request.Materials
+                .Where(m => !string.IsNullOrWhiteSpace(m))
+                .Select(m => m.Trim())
+                .Distinct()
+                .ToList();
+
+            // Получаем существующие материалы
+            var existingMaterials = await dbContext.ProductMaterials
+                .Where(m => materialNames.Contains(m.Name))
+                .ToListAsync(cancellationToken);
+
+            var existingMaterialNames = existingMaterials.Select(m => m.Name).ToHashSet();
+
+            // Создаем новые материалы, которых нет в базе
+            var newMaterialNames = materialNames.Except(existingMaterialNames).ToList();
+            var newMaterials = newMaterialNames
+                .Select(name => new ProductMaterial
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name,
+                })
+                .ToList();
+
+            if (newMaterials.Count > 0)
+            {
+                await dbContext.ProductMaterials.AddRangeAsync(newMaterials, cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
+            // Объединяем существующие и новые материалы
+            var allMaterials = existingMaterials.Concat(newMaterials).ToList();
+
+            // Загружаем продукт заново, чтобы получить доступ к коллекции Materials
+            var loadedProduct = await dbContext.Products
+                .Include(p => p.Materials)
+                .FirstAsync(p => p.Id == product.Id, cancellationToken);
+
+            // Добавляем материалы в коллекцию
+            foreach (var material in allMaterials)
+            {
+                loadedProduct.Materials.Add(material);
+            }
+
+            await dbContext.SaveChangesAsync(cancellationToken);
+
+            return loadedProduct;
+        }
+
         return product;
     }
 }

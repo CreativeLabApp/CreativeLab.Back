@@ -26,10 +26,20 @@ public class ProductDetailsVm : IMapWith<Product>
     public DateTime CreatedAt { get; set; }
     public decimal Rating { get; set; }
     public int RatingsCount { get; set; }
+    public List<MasterclassVm> Masterclasses { get; set; } = [];
 
     public void Mapping(Profile profile)
         => profile.CreateMap<Product, ProductDetailsVm>()
             .ForMember(d => d.SellerName, opt => opt.MapFrom(s => s.Seller.Name + " " + s.Seller.Surname))
             .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
             .ForMember(d => d.Materials, opt => opt.MapFrom(s => s.Materials.Select(m => m.Name).ToList()));
+}
+
+public class MasterclassVm
+{
+    public Guid Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string? ThumbnailUrl { get; set; }
+    public decimal Rating { get; set; }
+    public int RatingsCount { get; set; }
 }

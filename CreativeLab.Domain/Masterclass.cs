@@ -8,10 +8,12 @@ public class Masterclass
     public string? ShortDescription { get; set; } // Для превью
     public Guid CategoryId { get; set; }
     public Guid AuthorId { get; set; }
+    public Guid AgeCategoryId { get; set; }
 
     // Медиа
     public string[] ImageUrls { get; set; } = [];
     public string? ThumbnailUrl { get; set; } // Главное изображение
+    public string? VideoUrl { get; set; } // Ссылка на видео
 
     // Статистика
     public int Views { get; set; }
@@ -27,6 +29,7 @@ public class Masterclass
     // Навигационные свойства
     public User Author { get; set; } = null!;
     public Category Category { get; set; } = null!;
+    public AgeCategory AgeCategory { get; set; } = null!;
     public ICollection<Tag> Tags { get; set; } = [];
     public ICollection<MasterclassMaterial> Materials { get; set; } = [];
     public ICollection<UserFavoriteMasterclass> FavoritedBy { get; set; } = []; // Обратная связь

@@ -22,6 +22,24 @@ public class GetProductDetailsQueryHandler(ICreativeLabDbContext dbContext, IMap
             .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new InvalidOperationException("Product with this Id does not exist");
 
-        return mapper.Map<ProductDetailsVm>(product);
+        var result = mapper.Map<ProductDetailsVm>(product);
+
+        // Получаем мастер-классы того же автора
+        var masterclasses = await dbContext.Masterclasses
+            .Where(m => m.AuthorId == product.SellerId && m.IsPublished)
+            .OrderByDescending(m => m.Rating)
+            .Take(5)
+            .ToListAsync(cancellationToken);
+
+        result.Masterclasses = masterclasses.Select(m => new MasterclassVm
+        {
+            Id = m.Id,
+            Title = m.Title,
+            ThumbnailUrl = m.ThumbnailUrl,
+            Rating = m.Rating,
+            RatingsCount = m.RatingsCount
+        }).ToList();
+
+        return result;
     }
 }
