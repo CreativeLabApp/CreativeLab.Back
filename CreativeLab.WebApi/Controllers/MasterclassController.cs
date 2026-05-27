@@ -2,6 +2,7 @@ using AutoMapper;
 using CreativeLab.Application.Features.Masterclasses.Commands.CreateMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Commands.DeleteMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Commands.DeleteRating;
+using CreativeLab.Application.Features.Masterclasses.Commands.IncrementMasterclassViews;
 using CreativeLab.Application.Features.Masterclasses.Commands.RateMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Commands.UpdateMasterclass;
 using CreativeLab.Application.Features.Masterclasses.Queries.GetAllRatings;
@@ -101,6 +102,13 @@ public class MasterclassController(IMapper mapper, ICreativeLabDbContext dbConte
     {
         var result = await Mediator.Send(new RateMasterclassCommand { MasterclassId = id, UserId = userId, Score = score, Comment = comment });
         return Ok(result);
+    }
+
+    [HttpPatch("incrementviews")]
+    public async Task<ActionResult<int>> IncrementViews([FromQuery] Guid id)
+    {
+        var views = await Mediator.Send(new IncrementMasterclassViewsCommand { MasterclassId = id });
+        return Ok(views);
     }
 
     [HttpGet]

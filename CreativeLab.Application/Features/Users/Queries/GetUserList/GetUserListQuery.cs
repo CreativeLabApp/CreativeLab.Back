@@ -17,6 +17,9 @@ public class UserListItemVm
     public string Name { get; set; } = string.Empty;
     public string Surname { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string Role { get; set; } = "user";
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 
 public class GetUserListQueryHandler(ICreativeLabDbContext dbContext, IMapper mapper)
@@ -50,7 +53,12 @@ public class GetUserListQueryHandler(ICreativeLabDbContext dbContext, IMapper ma
             Id = u.Id,
             Name = u.Name,
             Surname = u.Surname,
-            Email = u.Email
+            Email = u.Email,
+            Role = string.Equals(u.Email, "admin@creativelab.com", System.StringComparison.OrdinalIgnoreCase)
+                ? "admin"
+                : "user",
+            IsActive = u.IsActive,
+            CreatedAt = u.CreatedAt,
         }).ToList();
     }
 }
