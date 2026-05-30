@@ -115,7 +115,7 @@ public class MasterclassController(IMapper mapper, ICreativeLabDbContext dbConte
     public async Task<ActionResult> GetUserRating([FromQuery] Guid id, [FromQuery] Guid userId)
     {
         var result = await Mediator.Send(new GetUserMasterclassRatingQuery { MasterclassId = id, UserId = userId });
-        return Ok(new { score = result?.Score, comment = result?.Comment });
+        return Ok(new { id = result?.Id, score = result?.Score, comment = result?.Comment });
     }
 
     [HttpGet]

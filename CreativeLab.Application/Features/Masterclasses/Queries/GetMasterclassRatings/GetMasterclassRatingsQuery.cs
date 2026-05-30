@@ -6,6 +6,7 @@ namespace CreativeLab.Application.Features.Masterclasses.Queries.GetMasterclassR
 
 public class MasterclassRatingDto
 {
+    public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public string UserName { get; set; } = string.Empty;
     public int Score { get; set; }
@@ -30,10 +31,11 @@ public class GetMasterclassRatingsQueryHandler(ICreativeLabDbContext dbContext)
             .OrderByDescending(r => r.UpdatedAt ?? r.CreatedAt)
             .Select(r => new MasterclassRatingDto
             {
-                UserId    = r.UserId,
-                UserName  = r.User.Name + " " + r.User.Surname,
-                Score     = r.Score,
-                Comment   = r.Comment,
+                Id = r.Id,
+                UserId = r.UserId,
+                UserName = r.User.Name + " " + r.User.Surname,
+                Score = r.Score,
+                Comment = r.Comment,
                 CreatedAt = r.CreatedAt,
                 UpdatedAt = r.UpdatedAt,
             })

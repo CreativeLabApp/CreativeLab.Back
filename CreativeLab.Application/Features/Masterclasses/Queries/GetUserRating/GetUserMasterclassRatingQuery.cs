@@ -6,6 +6,7 @@ namespace CreativeLab.Application.Features.Masterclasses.Queries.GetUserRating;
 
 public class UserMasterclassRatingDto
 {
+    public Guid Id { get; set; }
     public int Score { get; set; }
     public string? Comment { get; set; }
 }
@@ -26,6 +27,6 @@ public class GetUserMasterclassRatingQueryHandler(ICreativeLabDbContext dbContex
 
         if (rating is null) return null;
 
-        return new UserMasterclassRatingDto { Score = rating.Score, Comment = rating.Comment };
+        return new UserMasterclassRatingDto { Id = rating.Id, Score = rating.Score, Comment = rating.Comment };
     }
 }
