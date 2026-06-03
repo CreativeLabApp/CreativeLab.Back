@@ -1,13 +1,14 @@
-using System.Reflection;
-using System.Text;
 using CreativeLab.Application;
 using CreativeLab.Application.Common.Mappings;
 using CreativeLab.Application.Interfaces;
 using CreativeLab.Persistence;
 using CreativeLab.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 500_000_000; 
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBoundaryLengthLimit = int.MaxValue;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -108,6 +116,16 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.Use(async (context, next) =>
+{
+    var maxRequestBodySizeFeature = context.Features.Get<IHttpMaxRequestBodySizeFeature>();
+    if (maxRequestBodySizeFeature != null)
+    {
+        maxRequestBodySizeFeature.MaxRequestBodySize = 500_000_000; 
+    }
+
+    await next.Invoke();
+});
 app.UseCors("FrontendPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
